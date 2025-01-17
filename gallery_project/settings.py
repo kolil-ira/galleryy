@@ -128,3 +128,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = '/gallery/'
 
 LOGOUT_REDIRECT_URL = '/login/'  
+CSRF_COOKIE_SECURE = False  
+SESSION_COOKIE_SECURE = False  
+CSRF_USE_SESSIONS = True
