@@ -77,7 +77,7 @@ def register(request):
 
 def custom_login(request):
     if request.user.is_authenticated:
-        return redirect('gallery')  # Redirect authenticated users to the gallery
+        return redirect('gallery')  
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
@@ -91,10 +91,10 @@ def custom_login(request):
 
 
 def custom_logout(request):
-    # Modified to handle both GET and POST requests securely
+
     if request.method == 'POST' or request.method == 'GET':
         logout(request)
-    return redirect('login')  # Redirect to the login page
+    return redirect('login') 
 
 
 @login_required
