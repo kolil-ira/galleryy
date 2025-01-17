@@ -12,10 +12,7 @@ from django.db.models import Q
 
 @login_required
 def gallery_view(request):
-    """
-    Displays the gallery page with optional filtering by title or description.
-    Only accessible to logged-in users.
-    """
+   
     filter_term = request.GET.get('filter', '') 
     images = Image.objects.filter(
         Q(title__icontains=filter_term) | Q(description__icontains=filter_term)
@@ -26,9 +23,7 @@ def gallery_view(request):
 
 @login_required
 def upload_image(request):
-    """
-    Handles the upload of images by logged-in users.
-    """
+  
     if request.method == 'POST':
         title = request.POST.get('title')
         description = request.POST.get('description')
@@ -48,9 +43,7 @@ def upload_image(request):
 
 @login_required
 def like_image(request, image_id):
-    """
-    Handles liking or unliking an image.
-    """
+ 
     image = get_object_or_404(Image, id=image_id)
     if request.user in image.likes.all():
         image.likes.remove(request.user)  
@@ -60,9 +53,7 @@ def like_image(request, image_id):
 
 @login_required
 def dislike_image(request, image_id):
-    """
-    Handles disliking an image.
-    """
+ 
     image = get_object_or_404(Image, id=image_id)
     if request.user in image.dislikes.all():
         image.dislikes.remove(request.user) 
@@ -72,9 +63,7 @@ def dislike_image(request, image_id):
 
 @login_required
 def delete_image(request, image_id):
-    """
-    Allows the owner of an image (or admin) to delete it.
-    """
+
     image = get_object_or_404(Image, id=image_id)
     if image.uploaded_by == request.user or request.user.is_superuser:
         image.delete()
@@ -82,9 +71,7 @@ def delete_image(request, image_id):
 
 
 def register(request):
-    """
-    Handles user registration.
-    """
+  
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
@@ -98,9 +85,7 @@ def register(request):
 
 
 def custom_login(request):
-    """
-    Handles user login.
-    """
+   
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
@@ -120,8 +105,6 @@ def custom_logout(request):
 
 @login_required
 def profile(request):
-    """
-    Displays the profile page for the logged-in user.
-    """
+   
     user_images = Image.objects.filter(uploaded_by=request.user).order_by('-uploaded_at')
     return render(request, 'gallery/profile.html', {'user_images': user_images})
