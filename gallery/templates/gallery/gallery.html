@@ -1,0 +1,64 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery</title>
+    <link href="{% static 'css/tailwind.css' %}" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+    <header class="bg-blue-500 p-4 text-white flex justify-between">
+        <h1 class="text-xl">Gallery</h1>
+        <nav>
+            <a href="{% url 'upload_image' %}" class="mr-4">Upload</a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'logout' %}" class="mr-4">Logout</a>
+            {% else %}
+                <a href="{% url 'login' %}" class="mr-4">Login</a>
+            {% endif %}
+        </nav>
+    </header>
+
+    <div class="p-4">
+        <!-- Filter Form -->
+        <form method="GET" class="mb-4 flex">
+            <input
+                type="text"
+                name="filter"
+                placeholder="Search by title or description"
+                value="{{ request.GET.filter|default:'' }}"
+                class="flex-1 p-2 border rounded-l"
+            >
+            <button type="submit" class="bg-blue-500 text-white p-2 rounded-r">Search</button>
+        </form>
+
+        <!-- Image Grid -->
+        <div class="grid grid-cols-3 gap-4">
+            {% for image in images %}
+                <div class="bg-white rounded-lg shadow p-4">
+                    <img src="{{ image.image.url }}" alt="Uploaded image" class="w-full h-64 object-cover">
+                    <p class="text-gray-700 mt-2">Uploaded by: {{ image.uploaded_by }}</p>
+                    <p class="text-gray-500 text-sm">{{ image.uploaded_at }}</p>
+                    <h2 class="text-lg font-semibold mt-2">{{ image.title }}</h2>
+                    <p>{{ image.description }}</p>
+                    <p class="mt-2">Likes: {{ image.total_likes }}</p>
+                    <a href="{% url 'like_image' image.id %}" class="bg-green-500 text-white p-2 rounded">
+                        {% if user in image.likes.all %}
+                            Unlike
+                        {% else %}
+                            Like
+                        {% endif %}
+                    </a>
+                    {% if user == image.uploaded_by or user.is_superuser %}
+                        <a href="{% url 'delete_image' image.id %}" class="bg-red-500 text-white p-2 rounded">Delete</a>
+                    {% endif %}
+                </div>
+            {% empty %}
+                <p class="text-center col-span-3">No images found. Try searching for something else!</p>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
