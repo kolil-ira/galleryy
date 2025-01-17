@@ -1,4 +1,5 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,10 +29,6 @@
                 {{ form.username }}
             </div>
             <div class="mb-4">
-                <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-                {{ form.email }}
-            </div>
-            <div class="mb-4">
                 <label for="password1" class="block text-sm font-medium text-gray-700">Password</label>
                 {{ form.password1 }}
             </div>
@@ -44,7 +41,7 @@
             </button>
         </form>
         <p class="mt-4 text-center">
-             have an account? <a href="{% url 'login' %}" class="text-blue-500">Login here</a>
+            Already have an account? <a href="{% url 'login' %}" class="text-blue-500">Login here</a>
         </p>
     </div>
 </body>
