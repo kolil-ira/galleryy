@@ -100,7 +100,7 @@ def custom_login(request):
 def custom_logout(request):
     if request.method == 'POST':
         logout(request)
-        return redirect('login')  
+        return redirect('gallery')  
     return redirect('gallery/login.html') 
 
 @login_required
