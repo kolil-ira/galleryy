@@ -11,7 +11,7 @@
 </head>
 <body class="bg-gray-100">
     <header class="bg-blue-500 p-4 text-white flex justify-between">
-        <h1 class="text-xl">Gallery</h1>
+        <h1 class="text-xl">GallIRA</h1>
         <nav>
             <a href="{% url 'upload_image' %}" class="mr-4">Upload</a>
             {% if user.is_authenticated %}
@@ -38,7 +38,7 @@
             <button type="submit" class="bg-blue-500 text-white p-2 rounded-r">Search</button>
         </form>
 
-        <!-- Image Grid -->
+        
         <div class="grid grid-cols-3 gap-4">
             {% for image in images %}
                 <div class="bg-white rounded-lg shadow p-4">

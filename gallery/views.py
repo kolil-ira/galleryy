@@ -22,14 +22,14 @@ def upload_image(request):
         description = request.POST['description']
         image_file = request.FILES['image']
         
-        # Save the image and related info to the database
+    
         Image.objects.create(
             title=title,
             description=description,
             image=image_file,
             uploaded_by=request.user
         )
-        return redirect('gallery')  # Redirect to gallery view after uploading
+        return redirect('gallery')  
 
     return render(request, 'gallery/upload_image.html')
 
