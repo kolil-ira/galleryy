@@ -76,6 +76,8 @@ def register(request):
 
 
 def custom_login(request):
+    if request.user.is_authenticated:
+        return redirect('gallery')  # Redirect authenticated users to the gallery
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
