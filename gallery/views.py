@@ -101,7 +101,7 @@ def custom_logout(request):
     if request.method == 'POST':
         logout(request)
         return redirect('login')  
-    return redirect('registration/login.html') 
+    return redirect('gallery/login.html') 
 
 @login_required
 def profile(request):
