@@ -17,22 +17,21 @@ def gallery_view(request):
 
 @login_required
 def upload_image(request):
-    if request.method == 'POST':
-        title = request.POST.get('title')
-        description = request.POST.get('description')
-        image_file = request.FILES.get('image')
-
-        if image_file and title:
-            Image.objects.create(
-                title=title,
-                description=description,
-                image=image_file,
-                uploaded_by=request.user
-            )
-            return redirect('gallery')
+    if request.method == 'POST' and request.FILES.get('image'):
+        title = request.POST['title']
+        description = request.POST['description']
+        image_file = request.FILES['image']
+        
+        # Save the image and related info to the database
+        Image.objects.create(
+            title=title,
+            description=description,
+            image=image_file,
+            uploaded_by=request.user
+        )
+        return redirect('gallery')  # Redirect to gallery view after uploading
 
     return render(request, 'gallery/upload_image.html')
-
 
 @login_required
 def like_image(request, image_id):
